@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Lulin Blog</title>
-    <link>https://lulindeng.github.io/post/</link>
-    <description>Recent content in Posts on Lulin Blog</description>
+    <title>Numpy on Lulin Blog</title>
+    <link>https://lulindeng.github.io/tags/numpy/</link>
+    <description>Recent content in Numpy on Lulin Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 29 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://lulindeng.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 29 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://lulindeng.github.io/tags/numpy/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>numpy.pad()的基础用法</title>
       <link>https://lulindeng.github.io/2024/06/29/numpy-padding/</link>
@@ -14,15 +14,6 @@
       
       <guid>https://lulindeng.github.io/2024/06/29/numpy-padding/</guid>
       <description>np.pad() 基础用法 在卷积神经网络计算中，我们常常会需要对输入进行padding来避免输入的数组减小以及边缘信息丢失。numpy库中的np.pad()</description>
-    </item>
-    
-    <item>
-      <title>Welcome to Denglulin Blog</title>
-      <link>https://lulindeng.github.io/2024/06/29/hello-world/</link>
-      <pubDate>Sat, 29 Jun 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://lulindeng.github.io/2024/06/29/hello-world/</guid>
-      <description>“Yeah It&amp;rsquo;s on. ” Hello World!</description>
     </item>
     
   </channel>

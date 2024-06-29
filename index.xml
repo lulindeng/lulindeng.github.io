@@ -8,6 +8,15 @@
     <language>en-us</language>
     <lastBuildDate>Sat, 29 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://lulindeng.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>numpy.pad()的基础用法</title>
+      <link>https://lulindeng.github.io/2024/06/29/numpy-padding/</link>
+      <pubDate>Sat, 29 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://lulindeng.github.io/2024/06/29/numpy-padding/</guid>
+      <description>np.pad() 基础用法 在卷积神经网络计算中，我们常常会需要对输入进行padding来避免输入的数组减小以及边缘信息丢失。numpy库中的np.pad()</description>
+    </item>
+    
+    <item>
       <title>Welcome to Denglulin Blog</title>
       <link>https://lulindeng.github.io/2024/06/29/hello-world/</link>
       <pubDate>Sat, 29 Jun 2024 00:00:00 +0000</pubDate>

@@ -15,15 +15,15 @@
     
 
     
-    <meta name="title" content="Welcome to Denglulin Blog" />
-    <meta property="og:title" content="Welcome to Denglulin Blog" />
-    <meta property="twitter:title" content="Welcome to Denglulin Blog" />
+    <meta name="title" content="numpy.pad()的基础用法" />
+    <meta property="og:title" content="numpy.pad()的基础用法" />
+    <meta property="twitter:title" content="numpy.pad()的基础用法" />
     
 
     
-    <meta name="description" content="邓璐琳，程序员">
-    <meta property="og:description" content="邓璐琳，程序员" />
-    <meta property="twitter:description" content="邓璐琳，程序员" />
+    <meta name="description" content="numpy.pad()的基础用法，关于numpy中轴的理解">
+    <meta property="og:description" content="numpy.pad()的基础用法，关于numpy中轴的理解" />
+    <meta property="twitter:description" content="numpy.pad()的基础用法，关于numpy中轴的理解" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="邓璐琳, DengLulin, DengLulin, 璐琳的博客">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Welcome to Denglulin Blog | 邓璐琳的博客 | DengLulin Blog</title>
+    <title>numpy.pad()的基础用法 | 邓璐琳的博客 | DengLulin Blog</title>
 
-    <link rel="canonical" href="/2024/06/29/hello-world/">
+    <link rel="canonical" href="/2024/06/29/numpy-padding/">
 
     
     
@@ -170,9 +170,13 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/numpy" title="Numpy">
+                            Numpy
+                        </a>
+                        
                     </div>
-                    <h1>Welcome to Denglulin Blog</h1>
-                    <h2 class="subheading">Hello World, Hello Blog</h2>
+                    <h1>numpy.pad()的基础用法</h1>
+                    <h2 class="subheading"></h2>
                     <span class="meta">
                         
                             Posted by 
@@ -206,10 +210,89 @@
                 post-container">
 
                 
-                <blockquote>
-<p>“Yeah It&rsquo;s on. ”</p>
+                <h1 id="nppad-基础用法">np.pad() 基础用法</h1>
+<p>在卷积神经网络计算中，我们常常会需要对输入进行padding来避免输入的数组减小以及边缘信息丢失。numpy库中的np.pad()可以用来对输入数据进行填充(padding)的操作。</p>
+<h2 id="基本语法">基本语法</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">numpy<span style="color:#ff79c6">.</span>pad(array, pad_width, mode<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;constant&#39;</span>, <span style="color:#ff79c6">**</span>kwargs)
+<span style="color:#6272a4"># array: 需要进行操作的输入数组array</span>
+<span style="color:#6272a4"># pad_width: 每个轴(axis)填充的数据的数量（以轴为单位）</span>
+<span style="color:#6272a4"># mode: 填充模式， default为constant(填充常量)</span>
+</code></pre></div><h2 id="关于轴的理解">关于轴的理解</h2>
+<p>
+  <img src="/static/img/tech/numpy_padding.png" alt="numpy.pad()图解">
+
+
+<em>Fig 1 numpy.pad()图解</em></p>
+<p>np.pad()支持对输入数组上下左右四个方向进行填充，此处拿最常用的constant mode进行举例说明。<br>
+输入为a, 填充由<code>pad_width</code>和<code>constant_values</code>两个参数共同作用，<code>pad_width</code>中(1, 2)意思是在axis[0]轴（在二维数组中axis=0为行）的前面和后面分别填充1行和2行，(3, 4)意思是在axis[1]轴（在二维数组中axis=1为列）的前面和后面分别填充3列和4列。<br>
+经过此填充后，返回的数组如Fig 1 所示。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#ff79c6">=</span> [[<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>],
+     [<span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">3</span>],
+     [<span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">4</span>]]
+b <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>pad(a, ((<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>), (<span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span>)), <span style="color:#f1fa8c">&#39;constant&#39;</span>, constant_values<span style="color:#ff79c6">=</span>((<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>), (<span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">6</span>)))
+
+<span style="color:#6272a4"># output</span>
+[[<span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">0</span> <span style="color:#bd93f9">0</span> <span style="color:#bd93f9">0</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span>]
+ [<span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">2</span> <span style="color:#bd93f9">2</span> <span style="color:#bd93f9">2</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span>]
+ [<span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">3</span> <span style="color:#bd93f9">3</span> <span style="color:#bd93f9">3</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span>]
+ [<span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">4</span> <span style="color:#bd93f9">4</span> <span style="color:#bd93f9">4</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span>]
+ [<span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">1</span> <span style="color:#bd93f9">1</span> <span style="color:#bd93f9">1</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span>]
+ [<span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">1</span> <span style="color:#bd93f9">1</span> <span style="color:#bd93f9">1</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span>]]
+</code></pre></div><blockquote>
+<p><strong>Note:</strong> 在四个方向上填充长度一样的常量（通常是0）是np.pad()最常见的用法，此处给四个方向设置不同的填充数目和填充值是为了阐述np.pad()的用法，能更加灵活的使用此api。</p>
 </blockquote>
-<h2 id="hello-world">Hello World!</h2>
+<h2 id="nppad简单举例">np.pad()简单举例</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">import</span> numpy <span style="color:#ff79c6">as</span> np
+
+a <span style="color:#ff79c6">=</span> [[<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>],
+     [<span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">3</span>],
+     [<span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">4</span>]]
+
+b <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>pad(a, ((<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>), (<span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span>)), <span style="color:#f1fa8c">&#39;constant&#39;</span>, constant_values<span style="color:#ff79c6">=</span>((<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>), (<span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">6</span>)))
+
+<span style="color:#6272a4"># b output</span>
+<span style="color:#6272a4"># 四个方向pad数量不同，值也不同，结果如下：</span>
+<span style="color:#6272a4"># np.pad() 先对axis 0 进行padding， 在对axis 1 进行padding，因此5， 6会将部分0，1的值覆盖</span>
+<span style="color:#6272a4"># [[5 5 5 0 0 0 6 6 6 6]</span>
+<span style="color:#6272a4">#  [5 5 5 2 2 2 6 6 6 6]</span>
+<span style="color:#6272a4">#  [5 5 5 3 3 3 6 6 6 6]</span>
+<span style="color:#6272a4">#  [5 5 5 4 4 4 6 6 6 6]</span>
+<span style="color:#6272a4">#  [5 5 5 1 1 1 6 6 6 6]</span>
+<span style="color:#6272a4">#  [5 5 5 1 1 1 6 6 6 6]]</span>
+
+c <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>pad(a, ((<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>), (<span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span>)), <span style="color:#f1fa8c">&#39;constant&#39;</span>, constant_values<span style="color:#ff79c6">=</span>((<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>)))
+<span style="color:#6272a4"># c output</span>
+<span style="color:#6272a4"># 如果constant_values为(0, 1),np.pad()会先对每个轴的前一部分padding，然后对后一部分padding。</span>
+<span style="color:#6272a4"># [[0 0 0 0 0 0 1 1 1 1]</span>
+<span style="color:#6272a4">#  [0 0 0 2 2 2 1 1 1 1]</span>
+<span style="color:#6272a4">#  [0 0 0 3 3 3 1 1 1 1]</span>
+<span style="color:#6272a4">#  [0 0 0 4 4 4 1 1 1 1]</span>
+<span style="color:#6272a4">#  [0 0 0 1 1 1 1 1 1 1]</span>
+<span style="color:#6272a4">#  [0 0 0 1 1 1 1 1 1 1]]</span>
+
+d <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>pad(a, ((<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>), (<span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span>)), <span style="color:#f1fa8c">&#39;constant&#39;</span>)
+<span style="color:#6272a4"># d output</span>
+<span style="color:#6272a4"># 对于constant mode， 不设置constant_values的话，默认padding 0。</span>
+<span style="color:#6272a4"># [[0 0 0 0 0 0 0 0 0 0]</span>
+<span style="color:#6272a4">#  [0 0 0 2 2 2 0 0 0 0]</span>
+<span style="color:#6272a4">#  [0 0 0 3 3 3 0 0 0 0]</span>
+<span style="color:#6272a4">#  [0 0 0 4 4 4 0 0 0 0]</span>
+<span style="color:#6272a4">#  [0 0 0 0 0 0 0 0 0 0]</span>
+<span style="color:#6272a4">#  [0 0 0 0 0 0 0 0 0 0]]</span>
+
+pad_a <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>pad(a, ((<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>), (<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>)), <span style="color:#f1fa8c">&#39;constant&#39;</span>, constant_values<span style="color:#ff79c6">=</span>((<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>), (<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>)))
+<span style="color:#6272a4"># pad_a output</span>
+<span style="color:#6272a4"># 此为一种比较常见的用法，四个方向上padding数目相同。</span>
+<span style="color:#6272a4"># [[0 0 0 0 0 0 0]</span>
+<span style="color:#6272a4">#  [0 0 0 0 0 0 0]</span>
+<span style="color:#6272a4">#  [0 0 2 2 2 0 0]</span>
+<span style="color:#6272a4">#  [0 0 3 3 3 0 0]</span>
+<span style="color:#6272a4">#  [0 0 4 4 4 0 0]</span>
+<span style="color:#6272a4">#  [0 0 0 0 0 0 0]</span>
+<span style="color:#6272a4">#  [0 0 0 0 0 0 0]]</span>
+</code></pre></div><p>感谢阅读。</p>
+<h2 id="reference">Reference</h2>
+<p><a href="https://numpy.org/doc/stable/reference/generated/numpy.pad.html">https://numpy.org/doc/stable/reference/generated/numpy.pad.html</a></p>
 
 
                 
@@ -258,11 +341,11 @@
                 <hr>
                 <ul class="pager">
                     
-                    
-                    <li class="next">
-                        <a href="/2024/06/29/numpy-padding/" data-toggle="tooltip" data-placement="top" title="numpy.pad()的基础用法">Next
-                            Post &rarr;</a>
+                    <li class="previous">
+                        <a href="/2024/06/29/hello-world/" data-toggle="tooltip" data-placement="top" title="Welcome to Denglulin Blog">&larr;
+                            Previous Post</a>
                     </li>
+                    
                     
                 </ul>
                 
