@@ -15,15 +15,15 @@
     
 
     
-    <meta name="title" content="numpy.pad()的基础用法" />
-    <meta property="og:title" content="numpy.pad()的基础用法" />
-    <meta property="twitter:title" content="numpy.pad()的基础用法" />
+    <meta name="title" content="numpy.ma module 简述" />
+    <meta property="og:title" content="numpy.ma module 简述" />
+    <meta property="twitter:title" content="numpy.ma module 简述" />
     
 
     
-    <meta name="description" content="numpy.pad()的基础用法，关于numpy中轴的理解">
-    <meta property="og:description" content="numpy.pad()的基础用法，关于numpy中轴的理解" />
-    <meta property="twitter:description" content="numpy.pad()的基础用法，关于numpy中轴的理解" />
+    <meta name="description" content="numpy.ma的基础用法，mask的概念">
+    <meta property="og:description" content="numpy.ma的基础用法，mask的概念" />
+    <meta property="twitter:description" content="numpy.ma的基础用法，mask的概念" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="邓璐琳, DengLulin, DengLulin, 璐琳的博客">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>numpy.pad()的基础用法 | 邓璐琳的博客 | DengLulin Blog</title>
+    <title>numpy.ma module 简述 | 邓璐琳的博客 | DengLulin Blog</title>
 
-    <link rel="canonical" href="/2024/06/29/numpy-padding/">
+    <link rel="canonical" href="/2024/06/29/numpy-ma/">
 
     
     
@@ -174,8 +174,12 @@
                             numpy
                         </a>
                         
+                        <a class="tag" href="/tags/numpy.ma" title="numpy.ma">
+                            numpy.ma
+                        </a>
+                        
                     </div>
-                    <h1>numpy.pad()的基础用法</h1>
+                    <h1>numpy.ma module 简述</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         
@@ -184,7 +188,7 @@
                                 邓璐琳
                              
                             on 
-                            Saturday, June 29, 2024
+                            Sunday, June 30, 2024
                             
                             
                             
@@ -210,89 +214,72 @@
                 post-container">
 
                 
-                <h1 id="nppad-基础用法">np.pad() 基础用法</h1>
-<p>在卷积神经网络计算中，我们常常会需要对输入进行padding来避免输入的数组减小以及边缘信息丢失。numpy库中的np.pad()可以用来对输入数据进行填充(padding)的操作。</p>
-<h2 id="基本语法">基本语法</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">numpy<span style="color:#ff79c6">.</span>pad(array, pad_width, mode<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;constant&#39;</span>, <span style="color:#ff79c6">**</span>kwargs)
-<span style="color:#6272a4"># array: 需要进行操作的输入数组array</span>
-<span style="color:#6272a4"># pad_width: 每个轴(axis)填充的数据的数量（以轴为单位）</span>
-<span style="color:#6272a4"># mode: 填充模式， default为constant(填充常量)</span>
-</code></pre></div><h2 id="关于轴的理解">关于轴的理解</h2>
-<p>
-  <img src="/img/tech/numpy_padding.png" alt="numpy.pad()图解">
+                <h1 id="numpyma-module">numpy.ma module</h1>
+<p><code>numpy.ma</code> module 提供了一个跟numpy工作类似的替代品，其支持掩码数组（masked_array）。masked_array是一个可能存在缺失或者无效条目的数组。</p>
+<h2 id="关于mask的理解">关于mask的理解</h2>
+<p>在讲述<code>numpy.ma</code>模块前，需要先对mask有一个基本的理解。<br>
+
+  <img src="/img/tech/numpy_ma.png" alt="mask 图解">
 
 
-<em>Fig 1 numpy.pad()图解</em></p>
-<p>np.pad()支持对输入数组上下左右四个方向进行填充，此处拿最常用的constant mode进行举例说明。<br>
-输入为a, 填充由<code>pad_width</code>和<code>constant_values</code>两个参数共同作用，<code>pad_width</code>中(1, 2)意思是在axis[0]轴（在二维数组中axis=0为行）的前面和后面分别填充1行和2行，(3, 4)意思是在axis[1]轴（在二维数组中axis=1为列）的前面和后面分别填充3列和4列。<br>
-经过此填充后，返回的数组如Fig 1 所示。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#ff79c6">=</span> [[<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>],
-     [<span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">3</span>],
-     [<span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">4</span>]]
-b <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>pad(a, ((<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>), (<span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span>)), <span style="color:#f1fa8c">&#39;constant&#39;</span>, constant_values<span style="color:#ff79c6">=</span>((<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>), (<span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">6</span>)))
+<em>Fig 1 mask 图解</em></p>
+<p>一个通俗的理解是，我们把mask当成输入数组的一个面具，此mask会遮盖住输入数组中的某些数据（根据不同的需求），不同的mask作用于输入数组会有不同的masked_array。</p>
+<p>如Fig 1 所示， 给定一个3*3的数组，给予一个mask来遮盖掉所有&lt;0的数据，我们将得到一个新的masked array, 在此masked_array中我们可以肯定不包含有&lt;0的数据。</p>
+<p>在实际的使用中，我们可以灵活运用mask来遮盖掉invalid的数据。上述Fig 1的操作使用numpy.ma module的实现如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">import</span> numpy <span style="color:#ff79c6">as</span> np
+<span style="color:#ff79c6">import</span> numpy.ma <span style="color:#ff79c6">as</span> ma
+
+x <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>array([[<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>, <span style="color:#ff79c6">-</span><span style="color:#bd93f9">2</span>],
+              [<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">4</span>],
+              [<span style="color:#ff79c6">-</span><span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">0</span>]])
+mask <span style="color:#ff79c6">=</span> x <span style="color:#ff79c6">&lt;</span> <span style="color:#bd93f9">0</span>
+mx <span style="color:#ff79c6">=</span> ma<span style="color:#ff79c6">.</span>masked_array(x, mask<span style="color:#ff79c6">=</span>mask)
+<span style="color:#ff79c6">print</span>(mx)
 
 <span style="color:#6272a4"># output</span>
-[[<span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">0</span> <span style="color:#bd93f9">0</span> <span style="color:#bd93f9">0</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span>]
- [<span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">2</span> <span style="color:#bd93f9">2</span> <span style="color:#bd93f9">2</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span>]
- [<span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">3</span> <span style="color:#bd93f9">3</span> <span style="color:#bd93f9">3</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span>]
- [<span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">4</span> <span style="color:#bd93f9">4</span> <span style="color:#bd93f9">4</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span>]
- [<span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">1</span> <span style="color:#bd93f9">1</span> <span style="color:#bd93f9">1</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span>]
- [<span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">5</span> <span style="color:#bd93f9">1</span> <span style="color:#bd93f9">1</span> <span style="color:#bd93f9">1</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span> <span style="color:#bd93f9">6</span>]]
-</code></pre></div><blockquote>
-<p><strong>Note:</strong> 在四个方向上填充长度一样的常量（通常是0）是np.pad()最常见的用法，此处给四个方向设置不同的填充数目和填充值是为了阐述np.pad()的用法，能更加灵活的使用此api。</p>
+<span style="color:#6272a4"># [[2 3 --]</span>
+<span style="color:#6272a4">#  [-- 2 4]</span>
+<span style="color:#6272a4">#  [-- 1 0]]</span>
+</code></pre></div><h2 id="构造masked_array">构造masked_array</h2>
+<p><code>numpy.ma</code> 提供了很多接口来构造一个masked_array, 以下是一个常见的用法:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>array([<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>, <span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">3</span>])
+mx <span style="color:#ff79c6">=</span> ma<span style="color:#ff79c6">.</span>masked_array(x, mask<span style="color:#ff79c6">=</span>[<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">0</span>])
+
+<span style="color:#ff79c6">print</span>(mx)
+<span style="color:#ff79c6">print</span>(mx<span style="color:#ff79c6">.</span>mean())
+
+<span style="color:#6272a4"># output</span>
+<span style="color:#6272a4"># [2 2 3 -- 3]</span>
+<span style="color:#6272a4"># 2.5</span>
+</code></pre></div><p>给定一个输入数组x，一个mask，mask为一个含有布尔值的数组来表示输入数组中的数值是否需要被遮盖（False表示不用遮盖，True表示需要遮盖），然后通过调用<code>ma.masked_array</code>来构造一个masked_array。</p>
+<blockquote>
+<p>numpy.ma提供很多接口来构造masked_array, 此处不再赘述，具体请参考官方文档 <a href="https://numpy.org/doc/stable/reference/maskedarray.generic.html">numpy.ma module</a></p>
 </blockquote>
-<h2 id="nppad简单举例">np.pad()简单举例</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">import</span> numpy <span style="color:#ff79c6">as</span> np
+<h2 id="filled">.filled()</h2>
+<p>通常我们不仅仅想遮盖掉符合某些条件的invalid值，我们希望把这些失去数值的洞给填起来，此时就可以用到<code>.filled()</code>方法，具体使用如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>random<span style="color:#ff79c6">.</span>rand(<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>)
+mask <span style="color:#ff79c6">=</span> x <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">0.2</span>
 
-a <span style="color:#ff79c6">=</span> [[<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>],
-     [<span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">3</span>],
-     [<span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">4</span>]]
+mx <span style="color:#ff79c6">=</span> ma<span style="color:#ff79c6">.</span>masked_array(x, mask)
+y <span style="color:#ff79c6">=</span> mx<span style="color:#ff79c6">.</span>filled(<span style="color:#bd93f9">100</span>)
+<span style="color:#ff79c6">print</span>(x)
+<span style="color:#ff79c6">print</span>(y)
 
-b <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>pad(a, ((<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>), (<span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span>)), <span style="color:#f1fa8c">&#39;constant&#39;</span>, constant_values<span style="color:#ff79c6">=</span>((<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>), (<span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">6</span>)))
+<span style="color:#6272a4"># output </span>
+<span style="color:#6272a4"># [[[0.10408708 0.71909407 0.4184712 ]</span>
+<span style="color:#6272a4">#   [0.40530722 0.1517737  0.140223  ]]</span>
+<span style="color:#6272a4">#  [[0.28150267 0.81805388 0.59437241]</span>
+<span style="color:#6272a4">#   [0.75379898 0.9682474  0.46431333]]]</span>
 
-<span style="color:#6272a4"># b output</span>
-<span style="color:#6272a4"># 四个方向pad数量不同，值也不同，结果如下：</span>
-<span style="color:#6272a4"># np.pad() 先对axis 0 进行padding， 在对axis 1 进行padding，因此5， 6会将部分0，1的值覆盖</span>
-<span style="color:#6272a4"># [[5 5 5 0 0 0 6 6 6 6]</span>
-<span style="color:#6272a4">#  [5 5 5 2 2 2 6 6 6 6]</span>
-<span style="color:#6272a4">#  [5 5 5 3 3 3 6 6 6 6]</span>
-<span style="color:#6272a4">#  [5 5 5 4 4 4 6 6 6 6]</span>
-<span style="color:#6272a4">#  [5 5 5 1 1 1 6 6 6 6]</span>
-<span style="color:#6272a4">#  [5 5 5 1 1 1 6 6 6 6]]</span>
-
-c <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>pad(a, ((<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>), (<span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span>)), <span style="color:#f1fa8c">&#39;constant&#39;</span>, constant_values<span style="color:#ff79c6">=</span>((<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>)))
-<span style="color:#6272a4"># c output</span>
-<span style="color:#6272a4"># 如果constant_values为(0, 1),np.pad()会先对每个轴的前一部分padding，然后对后一部分padding。</span>
-<span style="color:#6272a4"># [[0 0 0 0 0 0 1 1 1 1]</span>
-<span style="color:#6272a4">#  [0 0 0 2 2 2 1 1 1 1]</span>
-<span style="color:#6272a4">#  [0 0 0 3 3 3 1 1 1 1]</span>
-<span style="color:#6272a4">#  [0 0 0 4 4 4 1 1 1 1]</span>
-<span style="color:#6272a4">#  [0 0 0 1 1 1 1 1 1 1]</span>
-<span style="color:#6272a4">#  [0 0 0 1 1 1 1 1 1 1]]</span>
-
-d <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>pad(a, ((<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>), (<span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span>)), <span style="color:#f1fa8c">&#39;constant&#39;</span>)
-<span style="color:#6272a4"># d output</span>
-<span style="color:#6272a4"># 对于constant mode， 不设置constant_values的话，默认padding 0。</span>
-<span style="color:#6272a4"># [[0 0 0 0 0 0 0 0 0 0]</span>
-<span style="color:#6272a4">#  [0 0 0 2 2 2 0 0 0 0]</span>
-<span style="color:#6272a4">#  [0 0 0 3 3 3 0 0 0 0]</span>
-<span style="color:#6272a4">#  [0 0 0 4 4 4 0 0 0 0]</span>
-<span style="color:#6272a4">#  [0 0 0 0 0 0 0 0 0 0]</span>
-<span style="color:#6272a4">#  [0 0 0 0 0 0 0 0 0 0]]</span>
-
-pad_a <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>pad(a, ((<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>), (<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>)), <span style="color:#f1fa8c">&#39;constant&#39;</span>, constant_values<span style="color:#ff79c6">=</span>((<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>), (<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>)))
-<span style="color:#6272a4"># pad_a output</span>
-<span style="color:#6272a4"># 此为一种比较常见的用法，四个方向上padding数目相同。</span>
-<span style="color:#6272a4"># [[0 0 0 0 0 0 0]</span>
-<span style="color:#6272a4">#  [0 0 0 0 0 0 0]</span>
-<span style="color:#6272a4">#  [0 0 2 2 2 0 0]</span>
-<span style="color:#6272a4">#  [0 0 3 3 3 0 0]</span>
-<span style="color:#6272a4">#  [0 0 4 4 4 0 0]</span>
-<span style="color:#6272a4">#  [0 0 0 0 0 0 0]</span>
-<span style="color:#6272a4">#  [0 0 0 0 0 0 0]]</span>
-</code></pre></div><p>感谢阅读。</p>
-<h2 id="reference">Reference</h2>
-<p><a href="https://numpy.org/doc/stable/reference/generated/numpy.pad.html">https://numpy.org/doc/stable/reference/generated/numpy.pad.html</a></p>
+<span style="color:#6272a4"># [[[  0.10408708 100.         100.        ]</span>
+<span style="color:#6272a4">#   [100.           0.1517737    0.140223  ]]</span>
+<span style="color:#6272a4">#  [[100.         100.         100.        ]</span>
+<span style="color:#6272a4">#   [100.         100.         100.        ]]]</span>
+</code></pre></div><p>在上述例子中，我们对于输入数组中&gt;0.2的数值给遮盖以后再填上100这个新值，以此构造出一个正常的numpy array 以便后续的数据操作。</p>
+<h1 id="总结">总结</h1>
+<p><code>numpy.ma</code>提供了一种新的数据类型，masked_array，可以非常灵活的处理numpy数组。</p>
+<h1 id="reference">Reference</h1>
+<p><a href="https://numpy.org/doc/stable/reference/maskedarray.generic.html">https://numpy.org/doc/stable/reference/maskedarray.generic.html</a></p>
 
 
                 
@@ -342,15 +329,10 @@ pad_a <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2024/06/29/hello-world/" data-toggle="tooltip" data-placement="top" title="Welcome to Denglulin Blog">&larr;
+                        <a href="/2024/06/29/numpy-padding/" data-toggle="tooltip" data-placement="top" title="numpy.pad()的基础用法">&larr;
                             Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2024/06/29/numpy-ma/" data-toggle="tooltip" data-placement="top" title="numpy.ma module 简述">Next
-                            Post &rarr;</a>
-                    </li>
                     
                 </ul>
                 

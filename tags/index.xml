@@ -6,13 +6,22 @@
     <description>Recent content in Tags on Lulin Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 29 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://lulindeng.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 30 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://lulindeng.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Numpy</title>
+      <title>numpy</title>
       <link>https://lulindeng.github.io/tags/numpy/</link>
-      <pubDate>Sat, 29 Jun 2024 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 30 Jun 2024 00:00:00 +0000</pubDate>
       
       <guid>https://lulindeng.github.io/tags/numpy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>numpy.ma</title>
+      <link>https://lulindeng.github.io/tags/numpy.ma/</link>
+      <pubDate>Sun, 30 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://lulindeng.github.io/tags/numpy.ma/</guid>
       <description></description>
     </item>
     

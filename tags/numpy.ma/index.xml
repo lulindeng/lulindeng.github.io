@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>numpy.ma on Lulin Blog</title>
+    <link>https://lulindeng.github.io/tags/numpy.ma/</link>
+    <description>Recent content in numpy.ma on Lulin Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 30 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://lulindeng.github.io/tags/numpy.ma/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>numpy.ma module 简述</title>
+      <link>https://lulindeng.github.io/2024/06/29/numpy-ma/</link>
+      <pubDate>Sun, 30 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://lulindeng.github.io/2024/06/29/numpy-ma/</guid>
+      <description>numpy.ma module numpy.ma module 提供了一个跟numpy工作类似的替代品，其支持掩码数组（masked_array）。masked_array是一个可能存在缺失或者无</description>
+    </item>
+    
+  </channel>
+</rss>
